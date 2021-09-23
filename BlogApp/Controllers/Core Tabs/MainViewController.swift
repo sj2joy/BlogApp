@@ -87,6 +87,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard APIManager.shared.canViewPost else {
+            let vc = PayWallViewController()
+            present(vc, animated: true)
+            return 
+        }
+        
         let vc = ViewPostViewController(post: posts[indexPath.row])
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.title = "Post"

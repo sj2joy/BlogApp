@@ -103,8 +103,14 @@ final class APIManager {
     }
 }
 
+
+//MARK: - Track Post Views
+
 extension APIManager {
     var canViewPost: Bool {
+        if isPremium() {
+            return true
+        }
         guard let date = postEligibleViewDate else {
             return true
         }
@@ -116,7 +122,7 @@ extension APIManager {
         let total = UserDefaults.standard.integer(forKey: "post_views")
             UserDefaults.standard.set(total + 1, forKey: "post_views")
        
-        if total == 3 {
+        if total == 2 {
             let hour: TimeInterval = 60 * 60
             postEligibleViewDate = Date().addingTimeInterval(hour * 24)
         }
